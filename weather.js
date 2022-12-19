@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-const process = require('process');
+import process from 'process';
+import { getArgs } from './helpers/args.js';
+import { printError, printHelp, printSuccess } from './services/log-service.js';
 
 const initCli = () => {
-  console.log('Hello from cli!');
+  const args = getArgs(process.argv);
+  if (args.h) {
+    printHelp();
+  }
 };
 
 initCli();
