@@ -5,6 +5,10 @@ import { printError, printHelp, printSuccess } from './services/log-service.js';
 import { saveKeyValue } from './services/storage-service.js';
 
 const saveToken = async (token) => {
+  if (!token.length) {
+    return printError("Token isn't passed");
+  }
+
   try {
     await saveKeyValue('token', token);
     printSuccess('Token saved');
@@ -21,7 +25,7 @@ const initCli = () => {
   if (args.s) {
   }
   if (args.t) {
-    return saveToken('token', args.t);
+    return saveToken(args.t);
   }
 };
 
