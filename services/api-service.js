@@ -1,9 +1,6 @@
-import https from 'https';
-import http from 'http';
 import { URL } from 'url';
 import { TOKEN_DICTIONARY, getKeyValue } from './storage-service.js';
 import axios from 'axios';
-import os from 'os';
 
 const limit = 1;
 const units = 'metric';
@@ -29,7 +26,7 @@ const getCityLocation = async (city) => {
   });
 
   if (data.length === 0) {
-    throw new Error(`City is not found: ${city}`);
+    throw new Error(`City not found: ${city}`);
   }
 
   return { lat: data[0].lat, lon: data[0].lon };

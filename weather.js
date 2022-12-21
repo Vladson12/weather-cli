@@ -18,6 +18,19 @@ const saveToken = async (token) => {
   }
 };
 
+const getForecast = async (city) => {
+  try {
+    const weather = await getWeather(city);
+    console.log(weather);
+  } catch (err) {
+    if (err?.response?.status === 401) {
+      printError('Wrong token passed');
+    } else {
+      printError(err.message);
+    }
+  }
+};
+
 const initCli = () => {
   const args = getArgs(process.argv);
   if (args.h) {
@@ -28,7 +41,8 @@ const initCli = () => {
   if (args.t) {
     return saveToken(args.t);
   }
-  getWeather('krasnodar').then((res) => console.log(res));
+
+  getForecast(process.env.CITY);
 };
 
 initCli();
