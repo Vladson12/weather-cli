@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { TOKEN_DICTIONARY, getKeyValue } from './storage-service.js';
+import { TOKEN_DICTIONARY, getValue } from './storage-service.js';
 import axios from 'axios';
 
 const limit = 1;
@@ -8,9 +8,34 @@ const cityLocationUrl = new URL('http://api.openweathermap.org/geo/1.0/direct');
 const currentWeatherUrl = new URL(
   'https://api.openweathermap.org/data/2.5/weather'
 );
-const lang = 'ru';
+const lang = 'en';
 
-const token = process.env.TOKEN ?? (await getKeyValue(TOKEN_DICTIONARY.token));
+const token = process.env.TOKEN ?? (await getValue(TOKEN_DICTIONARY.token));
+
+const getIcon = (icon) => {
+  switch (icon.slice(0, -1)) {
+    case '01':
+      return '☀️';
+    case '02':
+      return '🌤️';
+    case '03':
+      return '☁️';
+    case '04':
+      return '☁️';
+    case '09':
+      return '🌧️';
+    case '10':
+      return '🌦️';
+    case '11':
+      return '🌩️';
+    case '13':
+      return '❄️';
+    case '50':
+      return '🌫️';
+    default:
+      return '?';
+  }
+};
 
 const getCityLocation = async (city) => {
   if (!token) {
@@ -52,4 +77,4 @@ const getWeather = async (city) => {
   return data;
 };
 
-export { getWeather };
+export { getWeather, getCityLocation, getIcon };
